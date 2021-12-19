@@ -1,0 +1,6 @@
+kube_connect.yml
+./mysql-terraform/terraform.tfvars
+./mysql-terraform/terraform.tfstate
+./mysql-terraform/terraform.lock.hlc
+./mysql-terraform/terraform.tfstate.backup
+./mysql-terraform/.terraform
