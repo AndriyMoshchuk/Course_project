@@ -17,3 +17,4 @@ while [ -z $external_ip ]; do
     external_ip=$(kubectl get svc phpmyadmin-service --template="{{range .status.loadBalancer.ingress}}{{.ip}}{{end}}")
 done
 echo $external_ip
+xdg-open "http://$external_ip"
