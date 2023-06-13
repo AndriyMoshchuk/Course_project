@@ -1,3 +1,20 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "2.88.1"
+    }
+  }
+
+  backend "azurerm" {
+    resource_group_name  = "PhpMyAdmin"
+    storage_account_name = "phpmyadmin"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+    #use_oidc             = true
+  }
+}
+
 provider "azurerm" {
     features {}
 }
@@ -19,7 +36,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
         admin_username = "ubuntu"
 
         ssh_key {
-            key_data = file(var.ssh_public_key)
+            key_data = var.ssh_public_key
         }
     }
 
@@ -29,9 +46,8 @@ resource "azurerm_kubernetes_cluster" "k8s" {
         vm_size         = "Standard_B2s"
     }
 
-    service_principal {
-        client_id     = var.client_id
-        client_secret = var.client_secret
+    identity {
+        type = "SystemAssigned"
     }
 
     network_profile {
